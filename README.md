@@ -72,11 +72,11 @@ Une fraction $x$ de $Q_{in}$ est apportée à volume constant, le reste à press
 
 | Transformation | Nature | Relations |
 |---|---|---|
-| 1 → 2 compression | isentropique | $T_2 = T_1\,\varepsilon^{\gamma-1}$, $P_2 = P_1\,\varepsilon^{\gamma}$ |
-| 2 → 3 combustion | isochore | $T_3 = T_2 + \dfrac{x\,Q_{in}}{m\,c_v}$, $P_3 = P_2\,T_3/T_2$ |
-| 3 → 4 combustion | isobare | $T_4 = T_3 + \dfrac{(1-x)\,Q_{in}}{m\,c_p}$, $V_4 = V_3\,T_4/T_3$ |
-| 4 → 5 détente | isentropique | $T_5 = T_4\,(V_4/V_5)^{\gamma-1}$ |
-| 5 → 1 échappement | isochore | $Q_{out} = m\,c_v\,(T_5 - T_1)$ |
+| 1 → 2 compression | isentropique | $T_2 = T_1 \varepsilon^{\gamma-1}$, $P_2 = P_1 \varepsilon^{\gamma}$ |
+| 2 → 3 combustion | isochore | $T_3 = T_2 + \dfrac{x Q_{in}}{m c_v}$, $P_3 = P_2 T_3/T_2$ |
+| 3 → 4 combustion | isobare | $T_4 = T_3 + \dfrac{(1-x) Q_{in}}{m c_p}$, $V_4 = V_3 T_4/T_3$ |
+| 4 → 5 détente | isentropique | $T_5 = T_4 (V_4/V_5)^{\gamma-1}$ |
+| 5 → 1 échappement | isochore | $Q_{out} = m c_v (T_5 - T_1)$ |
 
 Si la phase isobare atteint le point mort bas ($V_4 > V_1$), elle est tronquée et la chaleur restante n'est pas convertie ; le modèle le signale.
 
@@ -104,7 +104,7 @@ W_{net} = \sum W_i \qquad \eta_{th} = \frac{W_{net}}{Q_{in}} \qquad PMI = \frac{
 P_i = W_{net}\, n_{cyl}\, \frac{N}{120} \qquad C_i = \frac{P_i}{\omega} \qquad CSI = \frac{m_f}{W_{net}}
 ```
 
-Le rendement obtenu est comparé à la référence d'Otto $1 - \varepsilon^{1-\gamma}$. L'entropie est calculée par $s = c_p \ln(T/T_{ref}) - R \ln(P/P_{ref})$, avec $T_{ref} = 298{,}15$ K et $P_{ref} = 101\,325$ Pa.
+Le rendement obtenu est comparé à la référence d'Otto $1 - \varepsilon^{1-\gamma}$. L'entropie est calculée par $s = c_p \ln(T/T_{ref}) - R \ln(P/P_{ref})$, avec $T_{ref} = 298{,}15$ K et $P_{ref} = 101325$ Pa.
 
 ### Cinématique bielle-manivelle
 
@@ -130,7 +130,7 @@ Pour chaque moteur, la pression d'admission équivalente $P_1$ est **calée** po
 | 4 · fin de combustion isobare | 190,93 | 3 479 | 63,2 |
 | 5 · PMB, fin de détente | 11,26 | 1 801 | 554,5 |
 
-γ converge à 1,303 en 20 itérations. Rendement thermique 50,2 % (référence Otto : 50,4 %), PMI 34,2 bar, puissance indiquée 712 kW (968 ch) pour 600 ch effectifs annoncés. Le banc affiche ici un avertissement : $T_{max} \approx 3\,480$ K dépasse le seuil où la dissociation de CO₂ et H₂O limite la température réelle, que le cycle à air surestime.
+γ converge à 1,303 en 20 itérations. Rendement thermique 50,2 % (référence Otto : 50,4 %), PMI 34,2 bar, puissance indiquée 712 kW (968 ch) pour 600 ch effectifs annoncés. Le banc affiche ici un avertissement : $T_{max} \approx 3480$ K dépasse le seuil où la dissociation de CO₂ et H₂O limite la température réelle, que le cycle à air surestime.
 
 <p align="center">
   <img src="docs/img/diagrammes.png" alt="Diagrammes P-V et T-s du cycle de Sabathé calculé pour l'Audi 4.0 TFSI V8" width="680">
