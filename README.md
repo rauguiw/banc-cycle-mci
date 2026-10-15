@@ -12,6 +12,8 @@ Aucune installation : l'outil s'ouvre directement dans le navigateur (ordinateur
 ![Modèle](https://img.shields.io/badge/mod%C3%A8le-0D%20%C2%B7%20cycle%20%C3%A0%20air-BF3F0B?style=flat-square)
 ![Catalogue](https://img.shields.io/badge/catalogue-124%20moteurs%20r%C3%A9els-0D757D?style=flat-square)
 ![Langage](https://img.shields.io/badge/TypeScript%20%C2%B7%20React%20%C2%B7%20Three.js-14202A?style=flat-square)
+![Python](https://img.shields.io/badge/noyau%20de%20calcul-Python-2446B0?style=flat-square)
+[![Tests Python](https://github.com/rauguiw/banc-cycle-mci/actions/workflows/tests-python.yml/badge.svg)](https://github.com/rauguiw/banc-cycle-mci/actions/workflows/tests-python.yml)
 ![Licence](https://img.shields.io/badge/licence-MIT-55646F?style=flat-square)
 
 ---
@@ -27,6 +29,8 @@ Choisissez un moteur réel ou saisissez vos propres consignes (géométrie, admi
 - une **animation 3D** du moteur (cinématique bielle-manivelle exacte, ordre d'allumage, distribution) implantée dans une silhouette de véhicule.
 
 Le modèle s'auto-contrôle : des avertissements signalent quand une hypothèse sort de son domaine de validité (dissociation au-delà de 2 500 K, pression de pointe irréaliste, mélange riche, limite de fumée diesel, cliquetis…). Les résultats s'exportent en CSV.
+
+Le noyau de calcul existe aussi **en Python** ([`python/`](python)). Ce portage reproduit l'application à la précision machine et est vérifié automatiquement par une suite de tests. Il permet d'enchaîner des études paramétriques et du post-traitement par script.
 
 ## Démarche
 
@@ -163,6 +167,32 @@ L'application tient dans un seul fichier, [`index.html`](index.html), sans insta
 
 **Lancer en local :** télécharger `index.html` et l'ouvrir dans un navigateur (connexion Internet requise pour charger React, Three.js et Babel depuis leur CDN).
 
+## Noyau de calcul en Python
+
+Le dossier [`python/`](python) contient le paquet `cycle_mci`, un portage du noyau thermodynamique, de la cinématique et du catalogue. Il n'a aucune dépendance et dispose d'une interface en ligne de commande.
+
+```python
+from cycle_mci import Consignes, calculer_cycle
+
+base = Consignes(cycle="otto", lambda_=1.5)
+rendements = {eps: calculer_cycle(base.avec(epsilon=eps)).eta_th for eps in range(6, 25)}
+```
+
+**Validation.** Le code d'origine est extrait de `index.html` et exécuté avec Node pour produire les valeurs de référence. Sur les 124 moteurs et 20 cas particuliers, l'écart relatif maximal entre Python et JavaScript est de 5 × 10⁻¹⁶, soit la précision machine. S'y ajoutent des contrôles physiques indépendants :
+
+- rendements analytiques d'Otto et du Diesel ;
+- premier principe sur le cycle ;
+- isentropiques ;
+- valeurs tabulées de cp.
+
+Les tests tournent à chaque modification sur GitHub Actions. Le détail est dans [`python/README.md`](python/README.md).
+
+<p align="center">
+  <img src="docs/img/python-etude-parametrique.png" alt="Rendement thermique en fonction du taux de compression pour les cycles d'Otto, de Sabathé et Diesel, comparé à la formule à γ constant" width="720">
+</p>
+
+Avec γ itéré sur cp(T), le rendement d'Otto à ε = 10 tombe à 50,9 %, contre 60,2 % pour la formule de manuel à γ = 1,4. Par ailleurs, le calage des 124 moteurs sépare nettement les atmosphériques (P₁ médiane 1,02 bar) des suralimentés (1,86 bar), sans que le type d'admission soit fourni au modèle.
+
 ## Perspectives : du moteur à pistons au turboréacteur
 
 La structure du noyau de calcul se transpose directement à un cycle de Brayton-Joule :
@@ -180,7 +210,6 @@ La structure du noyau de calcul se transpose directement à un cycle de Brayton-
 Pistes d'évolution :
 
 - ajouter un module de cycle de turbine à gaz simple flux puis double flux, avec rendements de composants ;
-- porter le noyau de calcul en Python pour l'intégrer à des scripts de post-traitement et d'études paramétriques ;
 - remplacer le cycle à air par des propriétés de gaz brûlés et une loi de combustion de Wiebe ;
 - estimer les pertes mécaniques (corrélations de PMF) pour passer des grandeurs indiquées aux grandeurs effectives.
 

@@ -1,0 +1,38 @@
+name: Tests Python
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    name: Tests (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.9", "3.12", "3.13"]
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Tests unitaires et concordance avec le code JavaScript
+        run: python -m unittest discover -s tests -v
+      - name: Exemples de la documentation (doctest)
+        run: python -c "import doctest, sys, cycle_mci; sys.exit(doctest.testmod(cycle_mci).failed)"
+
+  reference:
+    name: Référence à jour avec index.html
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Régénérer catalogue et valeurs de référence depuis index.html
+        run: node --experimental-strip-types --no-warnings python/outils/generer_reference.mjs
+      - name: Vérifier qu'ils n'ont pas changé
+        run: git diff --exit-code -- python/cycle_mci/donnees python/tests/donnees

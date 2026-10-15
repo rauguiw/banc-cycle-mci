@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cycle-mci"
+version = "1.0.0"
+description = "Modèle thermodynamique 0D d'un moteur à combustion interne 4 temps (cycles Otto, Diesel, Sabathé)"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Walid RAUGUI" }]
+requires-python = ">=3.9"
+dependencies = []
+
+[project.optional-dependencies]
+exemples = ["numpy", "matplotlib"]
+
+[project.urls]
+Demo = "https://rauguiw.github.io/banc-cycle-mci/"
+Source = "https://github.com/rauguiw/banc-cycle-mci"
+
+[tool.setuptools]
+packages = ["cycle_mci"]
+
+[tool.setuptools.package-data]
+cycle_mci = ["donnees/*.json"]
