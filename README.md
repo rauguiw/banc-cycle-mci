@@ -6,6 +6,8 @@
 
 Aucune installation : l'outil s'ouvre directement dans le navigateur (ordinateur conseillé pour la vue 3D).
 
+[![Aperçu du Banc Cycle MCI : consignes, indicateurs de performance, avertissement de validité et banc 3D](docs/img/apercu.png)](https://rauguiw.github.io/banc-cycle-mci/)
+
 ![Démo](https://img.shields.io/badge/d%C3%A9mo-en%20ligne-2446B0?style=flat-square)
 ![Modèle](https://img.shields.io/badge/mod%C3%A8le-0D%20%C2%B7%20cycle%20%C3%A0%20air-BF3F0B?style=flat-square)
 ![Catalogue](https://img.shields.io/badge/catalogue-124%20moteurs%20r%C3%A9els-0D757D?style=flat-square)
@@ -129,6 +131,12 @@ Pour chaque moteur, la pression d'admission équivalente $P_1$ est **calée** po
 | 5 · PMB, fin de détente | 11,26 | 1 801 | 554,5 |
 
 γ converge à 1,303 en 20 itérations. Rendement thermique 50,2 % (référence Otto : 50,4 %), PMI 34,2 bar, puissance indiquée 712 kW (968 ch) pour 600 ch effectifs annoncés. Le banc affiche ici un avertissement : $T_{max} \approx 3\,480$ K dépasse le seuil où la dissociation de CO₂ et H₂O limite la température réelle, que le cycle à air surestime.
+
+<p align="center">
+  <img src="docs/img/diagrammes.png" alt="Diagrammes P-V et T-s du cycle de Sabathé calculé pour l'Audi 4.0 TFSI V8" width="680">
+</p>
+
+![Tableau des points d'état en grandeurs intensives : P, T, v, u, h, s](docs/img/points-etat.png)
 
 ## Limites assumées
 
